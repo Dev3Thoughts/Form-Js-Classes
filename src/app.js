@@ -1,4 +1,10 @@
 import UI from "./UiClass";
+import LocalStore from "./LocalStore";
+
+
+// Event: Display books on the dom load
+document.addEventListener('DOMContentLoaded', UI.displayBooks);
+
 // Book Class: Represents a Book
 class Book {
     constructor(title, author, isbn) {
@@ -8,10 +14,6 @@ class Book {
     }
 }
 
-// Store Class: Handles Storage
-
-// Event: Display a Books
-document.addEventListener('DOMContentLoaded', UI.displayBooks);
 
 // Event: Add a Book
 document.querySelector("#book-form").addEventListener('submit', (e) => {
@@ -29,6 +31,9 @@ document.querySelector("#book-form").addEventListener('submit', (e) => {
         // Add Book to UI
         UI.addBookToList(addNewBook);
 
+        // Add book to store
+        LocalStore.addBook(addNewBook);
+
         // show alert 
         UI.showAlert("Book Added", 'success');
 
@@ -41,7 +46,11 @@ document.querySelector("#book-form").addEventListener('submit', (e) => {
 
 // Event: Remove a Book
 document.querySelector('#book-list').addEventListener('click', (e) => {
-    console.log(UI.deleteBook(e.target));
+    UI.deleteBook(e.target);
+
+    // remove book from the LocalStorage
+    LocalStore.removeBook(e.target.parentElement.previousElementSibling.textContent);
+
     // show alert 
     UI.showAlert("Book is deleted", 'danger');
 });

@@ -1,25 +1,15 @@
-// UI Class: Handle UI Tasks
+import LocalStore from "./LocalStore";
+
 class UI {
     static displayBooks() {
-        const StoredBooks = [
-            {
-                title: 'Book One',
-                author: 'John Doe',
-                isbn: '234324'
-            },
-            {
-                title: 'Book Two',
-                author: 'Johnny Doe',
-                isbn: '2343002'
-            }
-        ];
-        const books = StoredBooks;
+        const books = LocalStore.getBooks();
 
         books.forEach((book) => {
             UI.addBookToList(book);
             console.log("ForEach", book);
         });
     }
+
     static addBookToList(book) {
 
         const list = document.querySelector("#book-list");
